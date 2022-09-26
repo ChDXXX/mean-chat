@@ -9,8 +9,12 @@ app.use(express.json());
 
 // import modules routes
 const UsersRoutes = require("./modules/users/routes");
+const GroupsRoutes = require("./modules/groups/routes");
+const {parseToken, guard} = require("./middlewares/permission.middleware");
+const {UserRole} = require("./modules/users/users.model");
 
 app.use('/api/users', UsersRoutes);
+app.use('/api/groups', parseToken, guard(UserRole.GROUP_ADMIN), GroupsRoutes);
 
 mongoose.connect(process.env.MONGODB_URI, () => {
   app.listen(PORT, function () {

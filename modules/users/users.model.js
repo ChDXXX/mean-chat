@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const UserRole = {
-  'SUPER_ADMIN': 'SUPER_ADMIN',
-  'GROUP_ADMIN': 'GROUP_ADMIN',
-  'GROUP_ASSISTANT': 'GROUP_ASSISTANT',
-  'GENERAL_USER': 'GENERAL_USER'
+  'SUPER_ADMIN': 40,
+  'GROUP_ADMIN': 30,
+  'GROUP_ASSISTANT': 20,
+  'GENERAL_USER': 10
 }
 
 const UserSchema = new mongoose.Schema({
@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   role: {
-    type: String,
+    type: Number,
     enum: Object.values(UserRole),
     default: UserRole.GENERAL_USER
   }

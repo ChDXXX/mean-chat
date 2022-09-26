@@ -41,8 +41,7 @@ class UsersController {
         token = jwt.sign({
           email: oldUser.email,
           username: oldUser.username,
-          id: oldUser._id,
-          role: oldUser.role
+          id: oldUser._id
         }, process.env.JWT_SECRET)
       } else {
         return res.status(400).send("Invalid Credentials");
