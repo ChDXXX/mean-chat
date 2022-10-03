@@ -12,6 +12,28 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  roles: {
+    default: [],
+    type: [{
+      role: {
+        type: Number,
+        enum: Object.values(UserRole),
+      },
+      group: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group'
+      },
+      channel: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Channel'
+      }
+    }]
+  },
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
+  },
   email: {
     type: String,
     required: true
@@ -20,11 +42,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  role: {
-    type: Number,
-    enum: Object.values(UserRole),
-    default: UserRole.GENERAL_USER
-  }
 });
 
 module.exports = {

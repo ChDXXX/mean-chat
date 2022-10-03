@@ -1,16 +1,31 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const UsersService = require("./users.service");
+const {UsersService} = require("./users.service");
+const {UserRole} = require("./users.model");
 
 class UsersController {
   constructor() {}
 
+  async removeUser(req, res) {
+    try {
+      const {user_id} = req.params;
+      await UsersService.removeUser(user_id);
+      res.status(200).send();
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  }
+
   async signUp(req, res) {
     try {
       const user = req.body;
-      const oldUser = await UsersService.findUser(user.email);
-
+      let oldUser = await UsersService.findUser(user.email);
       // check user if exist
+      if (oldUser) {
+        return res.status(409).send("User already exist. Please login.");
+      }
+
+      oldUser = await UsersService.findUserByName(user.username);
       if (oldUser) {
         return res.status(409).send("User already exist. Please login.");
       }

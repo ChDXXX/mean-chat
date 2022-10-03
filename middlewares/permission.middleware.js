@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const UsersService = require("../modules/users/users.service");
+const GroupsService = require("../modules/groups/groups.service");
 function parseToken(req, res, next) {
   const bearerHeader = req.headers["authorization"];
   if (bearerHeader) {
@@ -33,7 +34,23 @@ function guard(role) {
   }
 }
 
+async function guardOwnedGroup(req, res, next) {
+  try {
+    const user = await req.user;
+    const {group_id} = req.params;
+    const owned = await GroupsService.checkGroupIsOwn(group_id, user.id);
+    if (owned) {
+      next();
+    } else {
+      res.status(403).send('Forbidden');
+    }
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
+
 module.exports = {
   parseToken,
-  guard
+  guard,
+  guardOwnedGroup
 }

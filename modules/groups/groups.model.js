@@ -9,6 +9,10 @@ const GroupsSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
+  channels: {
+    type: [mongoose.Schema.Types.ObjectId],
+    default: []
+  },
   createdTime: {
     type: Date,
     default: Date.now
