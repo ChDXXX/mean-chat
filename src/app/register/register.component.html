@@ -1,0 +1,40 @@
+<div class="container">
+  <p class="display-3 text-center mt-5">Register</p>
+  <form class="w-50 m-auto" [formGroup]="registerForm">
+
+    <mat-form-field class="w-100" appearance="standard">
+      <mat-label>Email</mat-label>
+      <input [(ngModel)]="form.email" formControlName="email" matInput placeholder="Enter your email" />
+      <mat-icon matSuffix>mail</mat-icon>
+      <mat-hint *ngIf="email?.invalid && (email?.dirty || email?.touched) && email?.errors?.['required']"
+                class="text-danger">Please enter your email</mat-hint>
+      <mat-hint *ngIf="email?.invalid && (email?.dirty || email?.touched) && email?.errors?.['email']"
+                class="text-danger">Please enter a correct email</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="standard">
+      <mat-label>Username</mat-label>
+      <input [(ngModel)]="form.username" formControlName="username" matInput placeholder="Enter your username" />
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-hint *ngIf="username?.invalid && (username?.dirty || username?.touched) && username?.errors?.['required']"
+                class="text-danger">Please enter your username</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 mt-4" appearance="standard">
+      <mat-label>Password</mat-label>
+      <input [(ngModel)]="form.password" formControlName="password" matInput placeholder="Enter your password" />
+      <mat-icon matSuffix>lock</mat-icon>
+      <mat-hint *ngIf="password?.invalid && (password?.dirty || password?.touched) && password?.errors?.['required']"
+                class="text-danger">Please enter your password</mat-hint>
+    </mat-form-field>
+
+    <div class="text-end mt-2">
+      Already have account?
+      <a routerLink="/login">Login!</a>
+    </div>
+    <div class="mt-5 text-end">
+      <button [disabled]="registerForm.invalid" type="button" (click)="handleSubmit()" mat-raised-button color="primary">Login</button>
+    </div>
+
+  </form>
+</div>

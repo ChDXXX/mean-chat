@@ -1,0 +1,14 @@
+<p *ngIf="data.type === 'success'" class="d-flex align-items-center m-0 p-0">
+  <span class="me-2">{{data.message}}</span>
+  <mat-icon class="text-success">task_alt</mat-icon>
+</p>
+
+<p *ngIf="data.type === 'error'" class="d-flex align-items-center m-0 p-0">
+  <span class="me-2">{{data.message}}</span>
+  <mat-icon class="text-danger">priority_high</mat-icon>
+</p>
+
+
+<p *ngIf="!data.type" class="d-flex align-items-center m-0 p-0">
+  <span class="me-2">{{data.message}}</span>
+</p>
