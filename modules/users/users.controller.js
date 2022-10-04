@@ -2,9 +2,30 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {UsersService} = require("./users.service");
 const {UserRole} = require("./users.model");
+const mongoose = require("mongoose");
 
 class UsersController {
   constructor() {}
+
+  async getUserProfile(req, res) {
+    try {
+      const {id} = req.user;
+      const user = await UsersService.findUserById(id);
+      res.status(200).json(user);
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  }
+
+  async getUserById(req, res) {
+    try {
+      const {user_id} = req.params;
+      const user = await UsersService.findUserById(user_id);
+      res.status(200).json(user);
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  }
 
   async removeUser(req, res) {
     try {

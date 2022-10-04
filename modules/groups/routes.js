@@ -1,11 +1,11 @@
 const express = require("express");
 const {GroupsController} = require("./groups.controller");
-const {guardOwnedGroup} = require("../../middlewares/permission.middleware");
+const {guardOwnedGroup, parseToken} = require("../../middlewares/permission.middleware");
 
 const router = express.Router();
 
 router.route('')
-  .get(GroupsController.getOwnGroups)
+  .get(GroupsController.getGroupsOfUser)
   .post(GroupsController.createGroup);
 
 router.route('/:group_id')

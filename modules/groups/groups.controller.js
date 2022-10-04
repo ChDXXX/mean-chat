@@ -6,6 +6,17 @@ const mongoose = require("mongoose");
 class GroupsController {
   constructor() {}
 
+  async getGroupsOfUser(req, res) {
+    try {
+      const user = req.user;
+      const groups = await GroupsService.getUserGroups(user.id);
+      res.status(200).json(groups);
+    } catch (err) {
+      console.log(err)
+      res.status(500).send(err.message);
+    }
+  }
+
   async getOwnGroups(req, res) {
     try {
       const user = req.user;
