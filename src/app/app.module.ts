@@ -15,6 +15,10 @@ import {MatButtonModule} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
 import { ToastComponent } from './toast/toast.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatListModule} from "@angular/material/list";
+import { ContactListComponent } from './home/contact-list/contact-list.component';
+import { MembersComponent } from './home/members/members.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,9 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    ToastComponent
+    ToastComponent,
+    ContactListComponent,
+    MembersComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +40,9 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

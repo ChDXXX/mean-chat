@@ -55,6 +55,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password)
       .subscribe((res) => {
         this.authService.saveToken(res.token);
+        this.authService.saveUserId(res._id);
+        this.authService.refreshRoles();
         this.router.navigate(['/'], {replaceUrl: true});
         this.toast.openFromComponent(ToastComponent, {
           duration: 3000,

@@ -13,7 +13,7 @@
     </mat-form-field>
     <mat-form-field class="w-100 mt-4" appearance="standard">
       <mat-label>Password</mat-label>
-      <input [(ngModel)]="form.password" formControlName="password" matInput placeholder="Enter your password" />
+      <input type="password" [(ngModel)]="form.password" formControlName="password" matInput placeholder="Enter your password" />
       <mat-icon matSuffix>lock</mat-icon>
       <mat-hint *ngIf="password?.invalid && (password?.dirty || password?.touched) && password?.errors?.['required']"
                 class="text-danger">Please enter your password</mat-hint>

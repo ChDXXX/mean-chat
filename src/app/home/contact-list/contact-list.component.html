@@ -1,0 +1,47 @@
+<div>
+  <button
+    *ngIf="groupAdmin"
+    class="mb-3 w-100"
+    color="accent"
+    mat-raised-button>Create Group</button>
+  <mat-expansion-panel *ngFor="let group of contacts">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon class="me-2">group</mat-icon>
+        {{group.name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-selection-list [multiple]="false">
+      <button *ngIf="isChannelAdminInGroup(group)" class="w-100" mat-button color="primary">
+        Create Channel
+      </button>
+      <mat-list-option
+        (click)="handleClickChannel($event, channel)"
+        *ngFor="let channel of group.channels">
+        <mat-icon mat-list-icon>forum</mat-icon>
+        <div class="row">
+          <div class="col-9 p-0">
+            <div mat-line>
+              <span>{{channel.name}}</span>
+            </div>
+            <div mat-line>Users: {{channel.users.length}}</div>
+          </div>
+          <div class="col-3">
+            <mat-icon
+              *ngIf="isGroupAdmin(group)"
+              (click)="handleRemoveChannel(channel)"
+              class="text-danger">delete</mat-icon>
+          </div>
+        </div>
+      </mat-list-option>
+      <mat-list-item *ngIf="isGroupAdmin(group)">
+        <button class="w-100" mat-raised-button color="warn">
+          <mat-icon>delete</mat-icon>
+          Delete Group
+        </button>
+      </mat-list-item>
+    </mat-selection-list>
+  </mat-expansion-panel>
+
+</div>

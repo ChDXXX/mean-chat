@@ -1,1 +1,31 @@
-<p>home works!</p>
+<div class="container-fluid">
+  <div class="header text-end mt-3 mb-3">
+    <button (click)="handleSignOut()" mat-button >
+      Sign Out
+    </button>
+  </div>
+  <div class="dashboard row">
+    <div class="col-3 group-list">
+      <app-contact-list></app-contact-list>
+    </div>
+    <div class="col-9">
+      <div class="chat-board d-flex flex-column">
+        <div *ngIf="!memberService.currentChannel" class="alert alert-warning" role="alert">
+          Please select a channel on the left
+          and start your chat travel!
+        </div>
+        <div class="chat-header" *ngIf="memberService.currentChannel">
+          <p class="h3 m-0">
+            {{memberService.currentChannel?.name}}
+          </p>
+        </div>
+        <div class="chat-content flex-grow-1 row">
+          <div class="col-9"></div>
+          <div class="col-3">
+            <app-members></app-members>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
