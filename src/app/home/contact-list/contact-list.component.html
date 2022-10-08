@@ -1,10 +1,15 @@
 <div>
   <button
     *ngIf="groupAdmin"
+    (click)="handleOpenCreateGroup()"
     class="mb-3 w-100"
     color="accent"
     mat-raised-button>Create Group</button>
-  <mat-expansion-panel *ngFor="let group of contacts">
+  <mat-expansion-panel
+    [expanded]="group.open"
+    (opened)="contactService.openGroup(group._id)"
+    (closed)="contactService.closeGroup(group._id)"
+    *ngFor="let group of contacts">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <mat-icon class="me-2">group</mat-icon>
@@ -13,7 +18,7 @@
     </mat-expansion-panel-header>
 
     <mat-selection-list [multiple]="false">
-      <button *ngIf="isChannelAdminInGroup(group)" class="w-100" mat-button color="primary">
+      <button (click)="handleOpenCreateChannel(group._id)" *ngIf="isChannelAdminInGroup(group)" class="w-100" mat-button color="primary">
         Create Channel
       </button>
       <mat-list-option
@@ -36,7 +41,7 @@
         </div>
       </mat-list-option>
       <mat-list-item *ngIf="isGroupAdmin(group)">
-        <button class="w-100" mat-raised-button color="warn">
+        <button (click)="handleRemoveGroup(group)" class="w-100" mat-raised-button color="warn">
           <mat-icon>delete</mat-icon>
           Delete Group
         </button>

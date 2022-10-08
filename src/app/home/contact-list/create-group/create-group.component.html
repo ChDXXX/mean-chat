@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Create Group</h1>
+<form [formGroup]="createForm">
+  <mat-form-field class="w-100" appearance="legacy">
+    <mat-label>Group name</mat-label>
+    <input formControlName="name" [(ngModel)]="form.name" matInput placeholder="Enter a group name" />
+    <mat-hint class="text-danger" *ngIf="name?.invalid && (name?.dirty || name?.touched) && name?.errors?.['required']">
+      Group name can't be empty!
+    </mat-hint>
+  </mat-form-field>
+  <div class="mt-4 text-end">
+    <button (click)="handleCreate()" [disabled]="createForm.invalid" mat-raised-button color="primary">Create</button>
+  </div>
+</form>

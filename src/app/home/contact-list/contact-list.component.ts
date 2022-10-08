@@ -2,6 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {Channel, ContactService, Group} from "../../contact.service";
 import {AuthService, USER_ID} from "../../auth.service";
 import {MemberService, UserRole} from "../../member.service";
+import {MatDialog} from "@angular/material/dialog";
+import {CreateGroupComponent} from "./create-group/create-group.component";
+import {CreateChannelComponent} from "./create-channel/create-channel.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ToastComponent} from "../../toast/toast.component";
 
 @Component({
   selector: 'app-contact-list',
@@ -9,20 +14,46 @@ import {MemberService, UserRole} from "../../member.service";
   styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent implements OnInit {
-  contacts: Group[] = [];
   user_id: string = localStorage.getItem(USER_ID) || '';
   constructor(
+    private toast: MatSnackBar,
     private authService: AuthService,
-    private contactService: ContactService,
-    private memberService: MemberService
+    public contactService: ContactService,
+    private memberService: MemberService,
+    private dialog: MatDialog
   ) { }
+
+  get contacts() {
+    return this.contactService.contacts.map(contact => {
+      contact.channels = contact.channels.filter(channel => {
+        return channel.admins.includes(this.user_id) || channel.users.includes(this.user_id) || channel.creator === this.user_id;
+      })
+      contact.open = this.contactService.openedGroups.includes(contact._id);
+      return contact;
+    });
+  }
 
   get groupAdmin() {
     return this.authService.user?.roles.some(role => role.role >= UserRole.GROUP_ADMIN);
   }
 
   ngOnInit(): void {
-    this.fetchContacts();
+    this.contactService.fetchContacts();
+  }
+
+  handleOpenCreateChannel(group: string) {
+    this.dialog.open(CreateChannelComponent, {
+      width: '600px',
+      data: {
+        group: group
+      }
+    })
+  }
+
+  handleOpenCreateGroup() {
+    this.dialog.open(CreateGroupComponent, {
+      width: '600px'
+    })
   }
 
   handleClickChannel(e: MouseEvent, channel: Channel) {
@@ -33,20 +64,50 @@ export class ContactListComponent implements OnInit {
     }
   }
 
-  handleRemoveChannel(channel: Channel) {
-
+  handleRemoveGroup(group: Group) {
+    this.contactService.deleteGroup(group._id)
+      .subscribe(() => {
+        this.toast.openFromComponent(ToastComponent, {
+          duration: 3000,
+          data: {
+            message: "Delete successfully!",
+            type: "success"
+          },
+          verticalPosition: 'top'
+        });
+        this.contactService.fetchContacts();
+      }, err => {
+        this.toast.openFromComponent(ToastComponent, {
+          duration: 3000,
+          data: {
+            message: err.error,
+            type: "error"
+          },
+          verticalPosition: 'top'
+        });
+      })
   }
 
-
-
-  fetchContacts() {
-    this.contactService.getUserContacts()
-      .subscribe(contacts => {
-        this.contacts = contacts.map(contact => {
-          contact.channels = contact.channels.filter(channel => {
-            return channel.admins.includes(this.user_id) || channel.users.includes(this.user_id) || channel.creator === this.user_id;
-          })
-          return contact;
+  handleRemoveChannel(channel: Channel) {
+    this.contactService.deleteChannel(channel._id)
+      .subscribe(() => {
+        this.toast.openFromComponent(ToastComponent, {
+          duration: 3000,
+          data: {
+            message: "Delete successfully!",
+            type: "success"
+          },
+          verticalPosition: 'top'
+        });
+        this.contactService.fetchContacts();
+      }, err => {
+        this.toast.openFromComponent(ToastComponent, {
+          duration: 3000,
+          data: {
+            message: err.error,
+            type: "error"
+          },
+          verticalPosition: "top"
         });
       })
   }
@@ -56,7 +117,7 @@ export class ContactListComponent implements OnInit {
   }
 
   isChannelAdminInGroup(group: Group): Boolean {
-    return Boolean(group.channels.find(channel => {
+    return group.creator === this.user_id || Boolean(group.channels.find(channel => {
       return channel.admins.includes(this.user_id);
     }));
   }

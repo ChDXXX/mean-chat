@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
@@ -19,6 +19,9 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatListModule} from "@angular/material/list";
 import { ContactListComponent } from './home/contact-list/contact-list.component';
 import { MembersComponent } from './home/members/members.component';
+import { CreateGroupComponent } from './home/contact-list/create-group/create-group.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { CreateChannelComponent } from './home/contact-list/create-channel/create-channel.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,9 @@ import { MembersComponent } from './home/members/members.component';
     HomeComponent,
     ToastComponent,
     ContactListComponent,
-    MembersComponent
+    MembersComponent,
+    CreateGroupComponent,
+    CreateChannelComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,9 @@ import { MembersComponent } from './home/members/members.component';
     MatButtonModule,
     MatSnackBarModule,
     MatExpansionModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
