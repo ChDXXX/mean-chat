@@ -41,6 +41,12 @@ export class ContactListComponent implements OnInit {
     this.contactService.fetchContacts();
   }
 
+
+  handleOpenGroup(group: Group) {
+    this.contactService.openGroup(group._id);
+    this.memberService.currentGroup = group;
+  }
+
   handleOpenCreateChannel(group: string) {
     this.dialog.open(CreateChannelComponent, {
       width: '600px',

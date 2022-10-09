@@ -7,7 +7,7 @@
     mat-raised-button>Create Group</button>
   <mat-expansion-panel
     [expanded]="group.open"
-    (opened)="contactService.openGroup(group._id)"
+    (opened)="handleOpenGroup(group)"
     (closed)="contactService.closeGroup(group._id)"
     *ngFor="let group of contacts">
     <mat-expansion-panel-header>

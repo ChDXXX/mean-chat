@@ -1,5 +1,12 @@
 <mat-list *ngIf="memberService.members.length > 0">
   <div class="pb-0" mat-subheader>Members</div>
+  <div>
+    <button
+      *ngIf="memberService.isChannelAdmin"
+      (click)="handleClickAddMore()"
+      mat-button
+      color="primary">Add More</button>
+  </div>
   <mat-list-item *ngFor="let member of memberService.members">
     <div class="w-100 d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center">
@@ -14,10 +21,23 @@
           </div>
         </div>
       </div>
-      <mat-icon
-        class="text-danger"
-        *ngIf="!member.isCreator && memberService.currentChannel?.admins?.includes(authService.getUserId())"
-        role="button">person_remove</mat-icon>
+      <div>
+        <mat-icon
+          *ngIf="!member.isCreator && member.isAdmin"
+          class="text-warning me-2"
+          role="button">
+          swipe_down
+        </mat-icon>
+        <mat-icon
+          role="button"
+          *ngIf="!member.isCreator && !member.isAdmin"
+          class="text-info me-2">rocket_launch</mat-icon>
+        <mat-icon
+          (click)="handleRemoveMember(member)"
+          class="text-danger"
+          *ngIf="!member.isCreator && memberService.currentChannel?.admins?.includes(authService.getUserId())"
+          role="button">person_remove</mat-icon>
+      </div>
     </div>
   </mat-list-item>
 </mat-list>

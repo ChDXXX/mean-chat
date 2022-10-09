@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {AuthedHttpHeader, SERVER_URL} from "./auth.service";
+
 
 export interface Channel {
   _id: string;
@@ -61,6 +62,15 @@ export class ContactService {
 
   deleteChannel(channel_id: string) {
     return this.httpClient.delete(SERVER_URL + '/api/channels/' + channel_id);
+  }
+
+  refreshContacts() {
+    return this.getUserContacts()
+      .pipe(map(contacts => {
+        this.contacts = contacts;
+        return contacts;
+      }))
+
   }
 
   fetchContacts() {

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {AuthService, SERVER_URL} from "./auth.service";
-import {forkJoin} from "rxjs";
-import {Channel} from "./contact.service";
+import {AuthedHttpHeader, AuthService, SERVER_URL} from "./auth.service";
+import {forkJoin, Observable} from "rxjs";
+import {Channel, Group} from "./contact.service";
 
 export enum UserRole {
   SUPER_ADMIN = 40,
@@ -33,20 +33,52 @@ export interface Member {
 export class MemberService {
   members: Member[] = [];
   currentChannel: Channel | undefined;
+  currentGroup: Group | undefined;
   constructor(private httpClient: HttpClient, private authService: AuthService) { }
+
+  get isChannelAdmin() {
+    if (this.currentGroup?.creator === this.authService.getUserId()) {
+      return true;
+    }
+    if (this.currentChannel?.admins.includes(this.authService.getUserId())) {
+      return true;
+    }
+    return false;
+  }
+
+  createMember(username: string, email: string, password: string) {
+    return this.httpClient.post(SERVER_URL + `/api/channels/${this.currentChannel?._id}/create-user`, {
+      username,
+      email,
+      password
+    }, {
+      headers: AuthedHttpHeader()
+    })
+
+  }
+
+  refresh() {
+    if (this.currentChannel) {
+      this.refreshMembers(this.currentChannel);
+    }
+  }
+
+  removeMember(member_id: string) {
+    return this.httpClient.delete(SERVER_URL + `/api/channels/${this.currentChannel?._id}/remove/${member_id}`)
+  }
 
   refreshMembers(channel: Channel) {
     this.currentChannel = channel;
-    const getMembers = channel.users.map(id => {
-      return this.httpClient.get<Member>(SERVER_URL + `/api/users/${id}`);
-    });
-    forkJoin(getMembers)
-      .subscribe(members => {
-        this.members = members.map(member => {
-          member.isAdmin = channel.admins.includes(member._id);
-          member.isCreator = channel.creator === member._id;
-          return member;
-        });
-      })
+    if (this.currentChannel) {
+      this.httpClient.get<Member[]>(SERVER_URL + `/api/channels/${this.currentChannel._id}/users`)
+        .subscribe(members => {
+          this.members = members.map(member => {
+            member.isAdmin = channel.admins.includes(member._id);
+            member.isCreator = channel.creator === member._id;
+            return member;
+          });
+        })
+    }
+
   }
 }

@@ -22,6 +22,7 @@ import { MembersComponent } from './home/members/members.component';
 import { CreateGroupComponent } from './home/contact-list/create-group/create-group.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { CreateChannelComponent } from './home/contact-list/create-channel/create-channel.component';
+import { AddUserComponent } from './home/members/add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { CreateChannelComponent } from './home/contact-list/create-channel/creat
     ContactListComponent,
     MembersComponent,
     CreateGroupComponent,
-    CreateChannelComponent
+    CreateChannelComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
