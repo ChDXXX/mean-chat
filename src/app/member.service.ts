@@ -57,6 +57,20 @@ export class MemberService {
 
   }
 
+  upgradeToSuperAdmin(user_id: string) {
+    return this.httpClient.put(SERVER_URL + `/api/superadmins/${user_id}`, {});
+  }
+
+  upgradeToGroupAdmin(user_id: string) {
+    return this.httpClient.put(SERVER_URL + `/api/groupadmins/${user_id}`, {})
+  }
+
+  upgradeToChannelAdmin(channel_id: string, user_id: string) {
+    return this.httpClient.put(SERVER_URL + `/api/channels/${channel_id}/upgrade`, {
+      user_id
+    })
+  }
+
   refresh() {
     if (this.currentChannel) {
       this.refreshMembers(this.currentChannel);

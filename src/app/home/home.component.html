@@ -19,8 +19,11 @@
             {{memberService.currentChannel?.name}}
           </p>
         </div>
-        <div class="chat-content flex-grow-1 row">
-          <div class="col-9"></div>
+        <div  class="chat-content flex-grow-1 row">
+          <div *ngIf="memberService.currentChannel" class="col-9 chat-area p-0">
+            <app-messages></app-messages>
+            <app-chat-tool></app-chat-tool>
+          </div>
           <div class="col-3">
             <app-members></app-members>
           </div>

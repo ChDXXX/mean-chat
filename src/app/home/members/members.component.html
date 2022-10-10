@@ -23,16 +23,28 @@
       </div>
       <div>
         <mat-icon
-          *ngIf="!member.isCreator && member.isAdmin"
-          class="text-warning me-2"
-          role="button">
-          swipe_down
-        </mat-icon>
-        <mat-icon
+          matTooltip="Upgrade to super admin"
           role="button"
-          *ngIf="!member.isCreator && !member.isAdmin"
+          (click)="handleClickUpgradeSuperAdmin(member._id)"
+          *ngIf="isSuperAdmin"
           class="text-info me-2">rocket_launch</mat-icon>
         <mat-icon
+          (click)="handleClickUpgradeGroupAdmin(member._id)"
+          matTooltip="Upgrade to group admin"
+          role="button"
+          *ngIf="isSuperAdmin"
+          class="text-success me-2"
+        >airplanemode_active</mat-icon>
+        <mat-icon
+          matTooltip="Upgrade to channel admin"
+          (click)="handleClickUpgradeChannelAdmin(member._id)"
+          role="button"
+          *ngIf="isGroupAdmin"
+          class="text-primary me-2">
+          two_wheeler
+        </mat-icon>
+        <mat-icon
+          matTooltip="Remove user from channel"
           (click)="handleRemoveMember(member)"
           class="text-danger"
           *ngIf="!member.isCreator && memberService.currentChannel?.admins?.includes(authService.getUserId())"

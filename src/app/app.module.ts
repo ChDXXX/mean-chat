@@ -23,6 +23,10 @@ import { CreateGroupComponent } from './home/contact-list/create-group/create-gr
 import {MatDialogModule} from "@angular/material/dialog";
 import { CreateChannelComponent } from './home/contact-list/create-channel/create-channel.component';
 import { AddUserComponent } from './home/members/add-user/add-user.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import { MessagesComponent } from './home/messages/messages.component';
+import { ChatToolComponent } from './home/chat-tool/chat-tool.component';
+import {SocketioService} from "./socketio.service";
 
 @NgModule({
   declarations: [
@@ -35,7 +39,9 @@ import { AddUserComponent } from './home/members/add-user/add-user.component';
     MembersComponent,
     CreateGroupComponent,
     CreateChannelComponent,
-    AddUserComponent
+    AddUserComponent,
+    MessagesComponent,
+    ChatToolComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,9 +57,10 @@ import { AddUserComponent } from './home/members/add-user/add-user.component';
     MatExpansionModule,
     MatListModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    MatTooltipModule
   ],
-  providers: [],
+  providers: [SocketioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

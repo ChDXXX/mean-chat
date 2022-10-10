@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Member, MemberService} from "../../member.service";
+import {Member, MemberService, UserRole} from "../../member.service";
 import {AuthService} from "../../auth.service";
 import {MatDialog} from "@angular/material/dialog";
 import {AddUserComponent} from "./add-user/add-user.component";
@@ -21,6 +21,56 @@ export class MembersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  handleClickUpgradeSuperAdmin(user_id: string) {
+    this.memberService.upgradeToSuperAdmin(user_id)
+      .subscribe(() => {
+        this.memberService.refresh();
+        this.toast.openFromComponent(ToastComponent, {
+          duration: 3000,
+          data: {
+            type: 'success',
+            message: "Upgrade successfully!"
+          }
+        })
+      })
+  }
+
+  handleClickUpgradeGroupAdmin(user_id: string) {
+    this.memberService.upgradeToGroupAdmin(user_id)
+      .subscribe(() => {
+        this.memberService.refresh();
+        this.toast.openFromComponent(ToastComponent, {
+          duration: 3000,
+          data: {
+            type: 'success',
+            message: "Upgrade successfully!"
+          }
+        })
+      })
+  }
+
+  handleClickUpgradeChannelAdmin(user_id: string) {
+    this.memberService.upgradeToChannelAdmin(this.memberService.currentChannel?._id as string, user_id)
+      .subscribe(() => {
+        this.memberService.refresh();
+        this.toast.openFromComponent(ToastComponent, {
+          duration: 3000,
+          data: {
+            type: 'success',
+            message: "Upgrade successfully!"
+          }
+        })
+      })
+  }
+
+  get isSuperAdmin() {
+    return this.authService.user?.roles.find(role => role.role === UserRole.SUPER_ADMIN);
+  }
+
+  get isGroupAdmin() {
+    return this.memberService.currentGroup?.creator === this.authService.getUserId();
   }
 
   handleRemoveMember(user: Member) {

@@ -22,3 +22,6 @@
   background-color: deeppink;
   color: white;
 }
+.chat-area {
+  border-right: 1px solid gainsboro;
+}
