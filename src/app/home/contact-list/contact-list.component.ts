@@ -7,6 +7,7 @@ import {CreateGroupComponent} from "./create-group/create-group.component";
 import {CreateChannelComponent} from "./create-channel/create-channel.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ToastComponent} from "../../toast/toast.component";
+import {SocketioService} from "../../socketio.service";
 
 @Component({
   selector: 'app-contact-list',
@@ -16,6 +17,7 @@ import {ToastComponent} from "../../toast/toast.component";
 export class ContactListComponent implements OnInit {
   user_id: string = localStorage.getItem(USER_ID) || '';
   constructor(
+    private socketService: SocketioService,
     private toast: MatSnackBar,
     private authService: AuthService,
     public contactService: ContactService,
@@ -67,6 +69,7 @@ export class ContactListComponent implements OnInit {
     if (target.innerHTML !== 'delete') {
       // clicked channel
       this.memberService.refreshMembers(channel);
+      this.socketService.switchChannel(channel._id);
     }
   }
 

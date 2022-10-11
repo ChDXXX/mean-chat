@@ -27,6 +27,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { MessagesComponent } from './home/messages/messages.component';
 import { ChatToolComponent } from './home/chat-tool/chat-tool.component';
 import {SocketioService} from "./socketio.service";
+import { MediaDashboardComponent } from './home/chat-tool/media-dashboard/media-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {SocketioService} from "./socketio.service";
     AddUserComponent,
     MessagesComponent,
     ChatToolComponent,
+    MediaDashboardComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../auth.service";
+import {AuthService, JWT_TOKEN} from "../auth.service";
 import {Router} from "@angular/router";
 import {MemberService} from "../member.service";
-import {SocketioService} from "../socketio.service";
+import { SOCKET_MESSAGES, SocketioService} from "../socketio.service";
 
 @Component({
   selector: 'app-home',
@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.socketService.setupSocketConnection();
+    this.socketService.socket?.emit(SOCKET_MESSAGES.SAVE_TOKEN, localStorage.getItem(JWT_TOKEN));
   }
 
   handleSignOut() {

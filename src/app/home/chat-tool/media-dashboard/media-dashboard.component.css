@@ -1,0 +1,13 @@
+.media-dashboard {
+  height: 70vh;
+  overflow: auto;
+}
+
+.media-button {
+  width: 400px;
+  height: 400px;
+}
+
+.media-icon {
+  font-size: 50px;
+}
