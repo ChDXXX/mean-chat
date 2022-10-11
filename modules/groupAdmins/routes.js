@@ -5,5 +5,6 @@ const {parseToken} = require("../../middlewares/permission.middleware");
 const router = express.Router();
 
 router.post('', parseToken, GroupAdminController.createGroupAdmin);
+router.put('/:user_id', parseToken, GroupAdminController.upgradeToGroupAdmin);
 
 module.exports = router;

@@ -4,6 +4,11 @@ const {ChannelsModel} = require("./channels.model");
 class ChannelsService {
   constructor() {}
 
+  async getUsersOfChannel(channel_id) {
+    const channel = await ChannelsModel.findById(channel_id.toString()).populate("users");
+    return channel.users;
+  }
+
   async checkUserInChannel(channel_id, user_id) {
     const channel = await ChannelsModel.findById(channel_id);
     return channel.users.some(user => {

@@ -1,4 +1,4 @@
-const UsersService = require("../users/users.service");
+const {UsersService} = require("../users/users.service");
 const bcrypt = require("bcryptjs");
 const {UserRole} = require("../users/users.model");
 

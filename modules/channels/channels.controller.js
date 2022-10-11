@@ -8,6 +8,16 @@ const {GroupsService} = require("../groups/groups.service");
 class ChannelsController {
   constructor() {}
 
+  async getUsersOfChannel(req, res) {
+    try {
+      const { channel_id } = req.params;
+      const users = await ChannelsService.getUsersOfChannel(channel_id);
+      res.status(200).json(users);
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  }
+
   async upgradeUserToAssis(req, res) {
     try {
       const { user_id } = req.body;
@@ -26,6 +36,7 @@ class ChannelsController {
       )
       res.status(200).send();
     } catch (err) {
+      console.log(err)
       res.status(500).send(err.message);
     }
   }
@@ -82,11 +93,9 @@ class ChannelsController {
       // check user if exist
       let oldUser = await UsersService.findUser(email);
       if (oldUser) {
-        return res.status(409).send("User already exist. ");
-      }
-      oldUser = await UsersService.findUserByName(username);
-      if (oldUser) {
-        return res.status(409).send("User already exist. Please login.");
+        // directly add user to channel
+        await ChannelsService.pushUserToChannel(channel_id, mongoose.mongo.ObjectId(oldUser._id.toString()));
+        return res.status(201).send();
       }
 
       const hash = await bcrypt.hash(password, 10);

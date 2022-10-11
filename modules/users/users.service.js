@@ -7,6 +7,9 @@ class UsersService {
   async deleteRole(user_id, belong, belong_id) {
     const user = await UserModel.findById(user_id.toString());
     user.roles = user.roles.filter(role => {
+      if (role.belong !== 'channel') {
+        return true;
+      }
       return role[belong].toString() !== belong_id.toString()
     });
     await user.save();

@@ -1,9 +1,27 @@
-const UsersService = require("../users/users.service");
+const {UsersService} = require("../users/users.service");
 const bcrypt = require("bcryptjs");
 const {UserRole} = require("../users/users.model");
+const mongoose = require("mongoose");
 
 class GroupAdminController{
   constructor() {}
+
+  async upgradeToGroupAdmin(req, res) {
+    try {
+      const {user_id} = req.params;
+      const user = await UsersService.findUserById(user_id);
+      const roles = user.roles;
+      const groupAdminRole = roles.find(role => role.role === UserRole.GROUP_ADMIN);
+      if (!groupAdminRole) {
+        await UsersService.updateRoles(user._id, UserRole.GROUP_ADMIN);
+      }
+      res.status(200).send();
+    } catch (err) {
+      console.log(err)
+      res.status(500).send(err.message);
+    }
+  }
+
   async createGroupAdmin(req, res) {
     try {
       const user = req.user;

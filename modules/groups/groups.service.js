@@ -35,6 +35,9 @@ class GroupsService {
         groups.push(group);
       }
     }
+    groups.sort((prev, next) => {
+      return new Date(next.createdTime).getTime() - new Date(prev.createdTime).getTime();
+    })
     return groups;
   }
 
