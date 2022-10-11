@@ -19,7 +19,7 @@ class ChannelsService {
     console.log('debugger')
     const messages = channel.messages;
     messages.sort((prev, next) => {
-      return new Date(next.createdTime).getTime() - new Date(prev.createdTime).getTime();
+      return new Date(prev.createdTime).getTime() - new Date(next.createdTime).getTime();
     })
     return messages;
   }

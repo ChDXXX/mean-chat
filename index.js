@@ -31,7 +31,6 @@ const fileUpload = require('express-fileupload');
 app.use(express.static('public'));
 app.use(fileUpload());
 app.post(`/upload`, (req, res) => {
-  let sampleFile;
   let uploadPath;
 
   if (!req.files || Object.keys(req.files).length === 0) {
