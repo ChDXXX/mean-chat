@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {ElementRef, Injectable, ViewChild} from '@angular/core';
 import {io, Socket} from 'socket.io-client';
 import {J} from "@angular/cdk/keycodes";
 import {Channel} from "./contact.service";
@@ -13,7 +13,9 @@ export interface Message {
   messageType: MessageTypes;
   resourcePath: string;
   message: string;
-  author: string;
+  author: {
+    username: string;
+  };
   createdTime: string;
 }
 
@@ -36,6 +38,7 @@ export const SOCKET_MESSAGES = {
   providedIn: 'root'
 })
 export class SocketioService {
+  @ViewChild('messageBox') private messageBox: ElementRef | undefined;
   socket: Socket | undefined;
   messages: Message[] = [];
   constructor(private httpClient: HttpClient) { }
@@ -46,11 +49,24 @@ export class SocketioService {
     return this.httpClient.post<{filename: string}>(SERVER_URL + '/upload', formData);
   }
 
+  sendVideoMessage(filename: string) {
+    this.socket?.emit(SOCKET_MESSAGES.POST_MESSAGE, JSON.stringify({
+      messageType: MessageTypes.VIDEO,
+      resourcePath: filename
+    }))
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 1000)
+  }
+
   sendImageMessage(filename: string) {
     this.socket?.emit(SOCKET_MESSAGES.POST_MESSAGE, JSON.stringify({
       messageType: MessageTypes.IMAGE,
       resourcePath: filename
-    }))
+    }));
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 1000)
   }
 
   sendTextMessage(channel: Channel, message: string) {
@@ -58,6 +74,18 @@ export class SocketioService {
       messageType: MessageTypes.TEXT,
       message: message,
     }));
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 1000)
+  }
+
+  scrollToBottom(): void {
+    try {
+      const messageBox = document.querySelector("#messageBox");
+      if (messageBox) {
+        messageBox.scrollTop = messageBox.scrollHeight;
+      }
+    } catch(err) { }
   }
 
   setupSocketConnection() {

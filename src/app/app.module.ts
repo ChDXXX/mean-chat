@@ -28,6 +28,7 @@ import { MessagesComponent } from './home/messages/messages.component';
 import { ChatToolComponent } from './home/chat-tool/chat-tool.component';
 import {SocketioService} from "./socketio.service";
 import { MediaDashboardComponent } from './home/chat-tool/media-dashboard/media-dashboard.component';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { MediaDashboardComponent } from './home/chat-tool/media-dashboard/media-
     MatListModule,
     MatDialogModule,
     FormsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCardModule
   ],
   providers: [SocketioService],
   bootstrap: [AppComponent]

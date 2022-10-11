@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SocketioService} from "../../socketio.service";
 import {MemberService} from "../../member.service";
@@ -11,6 +11,7 @@ import {MediaDashboardComponent} from "./media-dashboard/media-dashboard.compone
   styleUrls: ['./chat-tool.component.css']
 })
 export class ChatToolComponent implements OnInit {
+
   form = {
     message: ''
   }
@@ -48,7 +49,7 @@ export class ChatToolComponent implements OnInit {
             this.socketService.sendImageMessage(source.filename);
           }
           if (type === 'video') {
-            this.socketService.sendImageMessage(source.filename);
+            this.socketService.sendVideoMessage(source.filename);
           }
         })
       mediaDashboardRef.close();

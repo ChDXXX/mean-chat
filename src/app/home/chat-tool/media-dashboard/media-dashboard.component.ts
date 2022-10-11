@@ -32,6 +32,7 @@ export class MediaDashboardComponent implements OnInit {
 
   handleSelectVideo(e: any) {
     const videoFile = e.target.files[0];
+    this.file = videoFile;
     const reader = new FileReader();
     reader.readAsDataURL(videoFile);
     reader.onload = () => {
