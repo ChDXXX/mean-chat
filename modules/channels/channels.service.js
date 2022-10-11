@@ -4,6 +4,26 @@ const {ChannelsModel} = require("./channels.model");
 class ChannelsService {
   constructor() {}
 
+  async createMessage(channel_id, message) {
+    return ChannelsModel.findOneAndUpdate({
+      _id: mongoose.mongo.ObjectId(channel_id)
+    }, {
+      $push: {
+        messages: message
+      }
+    })
+  }
+
+  async getMessagesOfChannel(channel_id) {
+    const channel = await ChannelsModel.findById(channel_id.toString()).populate("messages.author");
+    console.log('debugger')
+    const messages = channel.messages;
+    messages.sort((prev, next) => {
+      return new Date(next.createdTime).getTime() - new Date(prev.createdTime).getTime();
+    })
+    return messages;
+  }
+
   async getUsersOfChannel(channel_id) {
     const channel = await ChannelsModel.findById(channel_id.toString()).populate("users");
     return channel.users;
