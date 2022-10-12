@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {ContactService} from "../../../contact.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ToastComponent} from "../../../toast/toast.component";
@@ -15,8 +15,8 @@ export class CreateGroupComponent implements OnInit {
     name: ''
   }
 
-  createForm = new FormGroup({
-    name: new FormControl('', [
+  createForm = new UntypedFormGroup({
+    name: new UntypedFormControl('', [
       Validators.required
     ])
   })

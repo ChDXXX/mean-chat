@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {MemberService} from "../../../member.service";
 import {MatDialogRef} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -19,15 +19,15 @@ export class AddUserComponent implements OnInit {
     password: ''
   }
 
-  createForm = new FormGroup({
-    email: new FormControl('', [
+  createForm = new UntypedFormGroup({
+    email: new UntypedFormControl('', [
       Validators.required,
       Validators.email
     ]),
-    username: new FormControl('', [
+    username: new UntypedFormControl('', [
       Validators.required,
     ]),
-    password: new FormControl('', [
+    password: new UntypedFormControl('', [
       Validators.required
     ])
   })

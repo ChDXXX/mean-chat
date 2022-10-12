@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validator, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validator, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -21,12 +21,12 @@ export class LoginComponent implements OnInit {
     password: ''
   };
 
-  loginForm = new FormGroup({
-    email: new FormControl('', [
+  loginForm = new UntypedFormGroup({
+    email: new UntypedFormControl('', [
       Validators.required,
       Validators.email
     ]),
-    password: new FormControl('', [
+    password: new UntypedFormControl('', [
       Validators.required
     ])
   })

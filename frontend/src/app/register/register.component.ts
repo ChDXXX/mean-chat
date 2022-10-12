@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -22,15 +22,15 @@ export class RegisterComponent implements OnInit {
     username: ''
   };
 
-  registerForm = new FormGroup({
-    email: new FormControl('', [
+  registerForm = new UntypedFormGroup({
+    email: new UntypedFormControl('', [
       Validators.required,
       Validators.email
     ]),
-    username: new FormControl('', [
+    username: new UntypedFormControl('', [
       Validators.required
     ]),
-    password: new FormControl('', [
+    password: new UntypedFormControl('', [
       Validators.required
     ])
   })

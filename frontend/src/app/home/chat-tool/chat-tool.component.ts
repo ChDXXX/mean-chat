@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {SocketioService} from "../../socketio.service";
 import {MemberService} from "../../member.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -15,8 +15,8 @@ export class ChatToolComponent implements OnInit {
   form = {
     message: ''
   }
-  formGroup = new FormGroup({
-    message: new FormControl('', [
+  formGroup = new UntypedFormGroup({
+    message: new UntypedFormControl('', [
       Validators.required
     ])
   })

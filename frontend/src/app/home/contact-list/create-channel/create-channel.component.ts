@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ContactService} from "../../../contact.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -19,8 +19,8 @@ export class CreateChannelComponent implements OnInit {
     name: ''
   }
 
-  createForm = new FormGroup({
-    name: new FormControl('', [
+  createForm = new UntypedFormGroup({
+    name: new UntypedFormControl('', [
       Validators.required
     ])
   })
