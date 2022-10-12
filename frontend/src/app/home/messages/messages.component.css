@@ -1,0 +1,6 @@
+.messages {
+  max-height: 500px !important;
+  overflow: auto !important;
+  width: 100%;
+  box-sizing: border-box;
+}

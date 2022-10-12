@@ -1,0 +1,55 @@
+<mat-list *ngIf="memberService.members.length > 0">
+  <div class="pb-0" mat-subheader>Members</div>
+  <div>
+    <button
+      *ngIf="memberService.isChannelAdmin"
+      (click)="handleClickAddMore()"
+      mat-button
+      color="primary">Add More</button>
+  </div>
+  <mat-list-item *ngFor="let member of memberService.members">
+    <div class="w-100 d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center">
+        <mat-icon class="me-2" mat-list-icon>account_circle</mat-icon>
+        <div class="me-auto">
+          <div mat-line>{{member.username}}</div>
+          <div *ngIf="member.isCreator" mat-line>
+            <span class="badge bg-success">Creator</span>
+          </div>
+          <div *ngIf="!member.isCreator && member.isAdmin" mat-line>
+            <span class="badge bg-primary">Admin</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <mat-icon
+          matTooltip="Upgrade to super admin"
+          role="button"
+          (click)="handleClickUpgradeSuperAdmin(member._id)"
+          *ngIf="isSuperAdmin"
+          class="text-info me-2">rocket_launch</mat-icon>
+        <mat-icon
+          (click)="handleClickUpgradeGroupAdmin(member._id)"
+          matTooltip="Upgrade to group admin"
+          role="button"
+          *ngIf="isSuperAdmin"
+          class="text-success me-2"
+        >airplanemode_active</mat-icon>
+        <mat-icon
+          matTooltip="Upgrade to channel admin"
+          (click)="handleClickUpgradeChannelAdmin(member._id)"
+          role="button"
+          *ngIf="isGroupAdmin"
+          class="text-primary me-2">
+          two_wheeler
+        </mat-icon>
+        <mat-icon
+          matTooltip="Remove user from channel"
+          (click)="handleRemoveMember(member)"
+          class="text-danger"
+          *ngIf="!member.isCreator && memberService.currentChannel?.admins?.includes(authService.getUserId())"
+          role="button">person_remove</mat-icon>
+      </div>
+    </div>
+  </mat-list-item>
+</mat-list>

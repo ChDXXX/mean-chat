@@ -1,0 +1,31 @@
+<h1 class="mb-0" mat-dialog-title>Add user</h1>
+<p class="mt-0 text-secondary">If user already exist, will directly invite user to channel.</p>
+<form [formGroup]="createForm">
+  <mat-form-field class="w-100" appearance="legacy">
+    <mat-label>Username</mat-label>
+    <input formControlName="username" [(ngModel)]="form.username" matInput placeholder="Enter the user name" />
+    <mat-hint class="text-danger" *ngIf="username?.invalid && (username?.dirty || username?.touched) && username?.errors?.['required']">
+      User Name can't be empty
+    </mat-hint>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="legacy">
+    <mat-label>Email</mat-label>
+    <input formControlName="email" [(ngModel)]="form.email" matInput placeholder="Enter the user email" />
+    <mat-hint class="text-danger" *ngIf="email?.invalid && (email?.dirty || email?.touched) && email?.errors?.['required']">
+      Email can't be empty
+    </mat-hint>
+    <mat-hint class="text-danger" *ngIf="email?.invalid && (email?.dirty || email?.touched) && email?.errors?.['email']">
+      Please enter a correct email
+    </mat-hint>
+  </mat-form-field>
+  <mat-form-field class="w-100" appearance="legacy">
+    <mat-label>Password</mat-label>
+    <input type="password" formControlName="password" [(ngModel)]="form.password" matInput placeholder="Enter the password" />
+    <mat-hint class="text-danger" *ngIf="password?.invalid && (password?.dirty || password?.touched) && password?.errors?.['required']">
+      Password can't be empty
+    </mat-hint>
+  </mat-form-field>
+  <div class="mt-4 text-end">
+    <button (click)="handleCreate()" [disabled]="createForm.invalid" mat-raised-button color="primary">Create</button>
+  </div>
+</form>

@@ -1,0 +1,34 @@
+
+<div *ngIf="data.mediaType === 'image'" class="media-dashboard d-flex flex-column align-items-center">
+  <h1>Select an image</h1>
+  <img [src]="image" width="100%"/>
+  <div class="mt-2">
+    <button class="me-2" (click)="fileInput.click()" mat-raised-button color="primary">
+      <mat-icon>file_upload</mat-icon>
+      Upload
+    </button>
+    <button (click)="handleSend()" mat-raised-button color="accent">
+      <mat-icon>send</mat-icon>
+      Send
+    </button>
+  </div>
+  <input accept="image/*" (change)="handleSelectImage($event)" type="file"  #fileInput hidden/>
+</div>
+
+<div *ngIf="data.mediaType === 'video'" class="media-dashboard d-flex flex-column align-items-center">
+  <h1>Select an image</h1>
+  <video controls [src]="video" class="w-75" *ngIf="video">
+
+  </video>
+  <div class="mt-2">
+    <button class="me-2" (click)="fileInput.click()" mat-raised-button color="primary">
+      <mat-icon>file_upload</mat-icon>
+      Upload
+    </button>
+    <button (click)="handleSend()" mat-raised-button color="accent">
+      <mat-icon>send</mat-icon>
+      Send
+    </button>
+  </div>
+  <input accept="video/mp4" (change)="handleSelectVideo($event)" type="file"  #fileInput hidden/>
+</div>

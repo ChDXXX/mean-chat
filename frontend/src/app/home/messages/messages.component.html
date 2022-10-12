@@ -1,0 +1,24 @@
+<div class="messages w-100" id="messageBox">
+  <mat-card class="m-4" *ngFor="let message of messages">
+    <mat-card-header>
+      <mat-icon style="font-size: 40px; color: gray" mat-card-avatar>account_circle</mat-icon>
+      <mat-card-title>{{message.author.username}}</mat-card-title>
+      <mat-card-subtitle>Published at {{message.createdTime | date: 'short'}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p *ngIf="message.messageType === 'TEXT'">
+        {{message.message}}
+      </p>
+      <img
+        width="20%"
+        [src]="SERVER_URL + '/' + message.resourcePath"
+        *ngIf="message.messageType === 'IMAGE'"/>
+      <video
+        controls
+        width="30%"
+        [src]="SERVER_URL + '/' + message.resourcePath"
+        *ngIf="message.messageType === 'VIDEO'"
+      ></video>
+    </mat-card-content>
+  </mat-card>
+</div>

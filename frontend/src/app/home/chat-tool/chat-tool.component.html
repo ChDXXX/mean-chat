@@ -1,0 +1,25 @@
+<div class="chat-tool d-flex flex-column">
+  <div class="w-100 toolbar d-flex">
+    <mat-icon
+      (click)="handleOpenMediaDashboard('image')"
+      matTooltip="Send image"
+      role="button"
+      class="me-2"
+      style="font-size: 30px">image</mat-icon>
+    <mat-icon
+      (click)="handleOpenMediaDashboard('video')"
+      matTooltip="Send video"
+      role="button"
+      class="me2"
+      style="font-size: 30px">videocam</mat-icon>
+  </div>
+  <form [formGroup]="formGroup" class="w-100 p-2 " >
+    <mat-form-field class="w-100" appearance="fill">
+      <mat-label>Enter message</mat-label>
+      <textarea formControlName="message" [(ngModel)]="form.message" rows="8" style="max-height: 100%" matInput placeholder="Enter message here..."></textarea>
+    </mat-form-field>
+    <div class="text-end w-100">
+      <button (click)="handleSendTextMessage()" [disabled]="formGroup.invalid" mat-raised-button color="primary">Send</button>
+    </div>
+  </form>
+</div>
